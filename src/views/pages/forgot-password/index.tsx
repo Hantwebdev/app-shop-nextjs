@@ -53,7 +53,6 @@ type TDefaultValue = {
 }
 
 const ForgotPasswordPage: NextPage<TProps> = () => {
-
   // ** Translate
   const { t } = useTranslation()
 
@@ -63,16 +62,17 @@ const ForgotPasswordPage: NextPage<TProps> = () => {
   // ** theme
   const theme = useTheme()
 
-  const dispatch:AppDispatch = useDispatch()
-  const { isLoading, isSuccessForgotPassword, isErrorForgotPassword, messageForgotPassword} = useSelector((state:RootState) => state.auth)
-
+  const dispatch: AppDispatch = useDispatch()
+  const { isLoading, isSuccessForgotPassword, isErrorForgotPassword, messageForgotPassword } = useSelector(
+    (state: RootState) => state.auth
+  )
 
   const schema = yup.object().shape({
-    email: yup.string().required(t('Required_field')).matches(EMAIL_REG, t("Rules_email")),
+    email: yup.string().required(t('Required_field')).matches(EMAIL_REG, t('Rules_email'))
   })
 
   const defaultValues: TDefaultValue = {
-    email: 'admin@gmail.com',
+    email: 'admin@gmail.com'
   }
 
   const {
@@ -88,12 +88,12 @@ const ForgotPasswordPage: NextPage<TProps> = () => {
 
   const onSubmit = (data: { email: string }) => {
     if (!Object.keys(errors)?.length) {
-      dispatch(forgotPasswordAuthAsync({email: data.email}))
+      dispatch(forgotPasswordAuthAsync({ email: data.email }))
     }
   }
 
   useEffect(() => {
-    if(messageForgotPassword) {
+    if (messageForgotPassword) {
       if (isSuccessForgotPassword) {
         toast.success(t('Forgot_password_success'))
         dispatch(resetInitialState())
@@ -150,9 +150,9 @@ const ForgotPasswordPage: NextPage<TProps> = () => {
               alignItems: 'center'
             }}
           >
-            <Typography component='h1' variant='h5'>
+            {/* <Typography component='h1' variant='h5'>
               {t("Forgot_password")}
-            </Typography>
+            </Typography> */}
             <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
               <Box sx={{ mt: 2 }}>
                 <Controller
@@ -174,7 +174,7 @@ const ForgotPasswordPage: NextPage<TProps> = () => {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position='end'>
-                                <Icon icon='arcticons:fairemail' />
+                            <Icon icon='arcticons:fairemail' />
                           </InputAdornment>
                         )
                       }}
@@ -183,12 +183,18 @@ const ForgotPasswordPage: NextPage<TProps> = () => {
                   name='email'
                 />
               </Box>
-           
+
               <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-               {(t("Send_request"))}
+                {t('Send_request')}
               </Button>
-              <Button startIcon={<Icon icon="uiw:left"></Icon>} onClick={() => router.push(ROUTE_CONFIG.LOGIN)} fullWidth variant='outlined' sx={{ mt: 3, mb: 2 }}>
-               {(t("Back_login"))}
+              <Button
+                startIcon={<Icon icon='uiw:left'></Icon>}
+                onClick={() => router.push(ROUTE_CONFIG.LOGIN)}
+                fullWidth
+                variant='outlined'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {t('Back_login')}
               </Button>
             </form>
           </Box>
